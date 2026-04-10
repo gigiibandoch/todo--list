@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import TestItem from './components/TestItem.vue'
 
 const tarefas = ref([
   { id: 1, tarefa: 'Tarefa 1', status: 'concluida' },
@@ -88,6 +89,15 @@ function recuperarTarefas() {
         <button @click="delTarefa(item)">X</button>
       </li>
     </ul>
+    <TestItem
+      v-for="tarefa in tarefasFiltradas"
+      :tarefa="tarefa.tarefa"
+      :key="tarefa.id"
+      :id="tarefa.id"
+      :status="tarefa.status"
+      @excluir="delTarefa">
+    </TestItem>
+
     <input type="text" placeholder="Filtrar tarefa" v-model="filtro"
     />
     <button @click="ordenarArray">Ordenar</button>
@@ -96,6 +106,9 @@ function recuperarTarefas() {
     <p>Concluídas: {{ concluidas }}</p>
   </div>
 </template>
+
+
+
 <style scoped>
 div h1 {
   color: rgb(235, 156, 255);
