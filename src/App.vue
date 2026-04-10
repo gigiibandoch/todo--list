@@ -70,7 +70,6 @@ function recuperarTarefas() {
   tarefas.value.push(...tarefasRemovidas.value)
   tarefasRemovidas.value = []
 }
-
 </script>
 
 <template>
@@ -81,23 +80,15 @@ function recuperarTarefas() {
       {{ posicaoAlterada == -1 ? "Adicionar" : "Salvar" }}
     </button>
     <ul>
-      <li v-for="item in tarefasFiltradas" :key="item.id" :class="{ concluida: item.status === 'concluida' }">
-        <span @click="alterarStatus(item)">
-          {{ item.tarefa }}
-        </span>
-        <button @click="editTarefa(item.id)">Editar</button>
-        <button @click="delTarefa(item)">X</button>
-      </li>
+      <TestItem
+        v-for="tarefa in tarefasFiltradas"
+        :tarefa="tarefa"
+        :key="tarefa.id"
+        @excluir="delTarefa"
+        @status="alterarStatus"
+        @editar="editTarefa">
+      </TestItem>
     </ul>
-    <TestItem
-      v-for="tarefa in tarefasFiltradas"
-      :tarefa="tarefa.tarefa"
-      :key="tarefa.id"
-      :id="tarefa.id"
-      :status="tarefa.status"
-      @excluir="delTarefa">
-    </TestItem>
-
     <input type="text" placeholder="Filtrar tarefa" v-model="filtro"
     />
     <button @click="ordenarArray">Ordenar</button>
@@ -107,13 +98,10 @@ function recuperarTarefas() {
   </div>
 </template>
 
-
-
 <style scoped>
 div h1 {
   color: rgb(235, 156, 255);
-}
-
+} 
 div button {
   background-color: rgb(235, 156, 255);
   border-radius: 10px;
