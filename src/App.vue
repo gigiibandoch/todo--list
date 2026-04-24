@@ -1,13 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
 import TestItem from './components/TestItem.vue'
+import { listaTarefas } from './data/tarefas'
+const tarefas = ref(listaTarefas)
 
-const tarefas = ref([
-  { id: 1, tarefa: 'Tarefa 1', status: 'concluida' },
-  { id: 2, tarefa: 'Tarefa 2', status: 'concluida' },
-  { id: 3, tarefa: 'Tarefa 3', status: 'pendente' },
-  { id: 4, tarefa: 'Tarefa 4', status: 'pendente' }
-])
 
 const novaTarefa = ref('')
 const posicaoAlterada = ref(-1)
