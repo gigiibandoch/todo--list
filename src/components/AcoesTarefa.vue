@@ -1,13 +1,17 @@
 <script setup>
-defineEmits(['clique'])
+const emit = defineEmits(['ordenar', 'recuperar'])
+import ButtonChild from './ButtonChild.vue'
 </script>
 
 <template>
-  <button @click.prevent="$emit('clique')">
-    <slot></slot>
-  </button>
-</template>
+  <ButtonChild @clique="emit('ordenar')">
+    Ordenar
+  </ButtonChild>
 
+  <ButtonChild @clique="emit('recuperar')">
+    Recuperar
+  </ButtonChild>
+</template>
 <style scoped>
 div h1 {
   color: rgb(235, 156, 255);

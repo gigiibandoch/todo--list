@@ -1,13 +1,22 @@
 <script setup>
-defineEmits(['clique'])
+import TestItem from './TestItem.vue'
+
+defineProps(['tarefas'])
+defineEmits(['status', 'editar', 'excluir'])
 </script>
 
 <template>
-  <button @click.prevent="$emit('clique')">
-    <slot></slot>
-  </button>
+  <ul>
+    <TestItem
+      v-for="tarefa in tarefas"
+      :key="tarefa.id"
+      :tarefa="tarefa"
+      @status="$emit('status', $event)"
+      @editar="$emit('editar', $event)"
+      @excluir="$emit('excluir', $event)"
+    />
+  </ul>
 </template>
-
 <style scoped>
 div h1 {
   color: rgb(235, 156, 255);

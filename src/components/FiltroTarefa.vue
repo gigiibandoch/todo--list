@@ -1,13 +1,16 @@
 <script setup>
-defineEmits(['clique'])
+const props = defineProps(['filtro'])
+const emit = defineEmits(['filtrar'])
 </script>
 
 <template>
-  <button @click.prevent="$emit('clique')">
-    <slot></slot>
-  </button>
+  <input
+    type="text"
+    :value="props.filtro"
+    @input="emit('filtrar', $event.target.value)"
+    placeholder="Filtrar tarefa"
+  />
 </template>
-
 <style scoped>
 div h1 {
   color: rgb(235, 156, 255);

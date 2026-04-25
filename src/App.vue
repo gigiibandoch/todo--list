@@ -1,6 +1,11 @@
 <script setup>
 import { computed, ref } from 'vue'
 import TestItem from './components/TestItem.vue'
+import ButtonChild from './components/ButtonChild.vue'
+import AcoesTarefa from './components/AcoesTarefa.vue'
+import FormTarefa from './components/FormTarefa.vue'
+import FiltroTarefa from './components/FiltroTarefa.vue'
+import ListaTarefasChild from './components/ListaTarefasChild.vue'
 import { listaTarefas } from './data/tarefas'
 const tarefas = ref(listaTarefas)
 
@@ -66,29 +71,47 @@ function recuperarTarefas() {
   tarefas.value.push(...tarefasRemovidas.value)
   tarefasRemovidas.value = []
 }
+
+
+const editando = ref(false)
+
+function receberInput(valor) {
+  novaTarefa.value = valor
+}
+
+function atualizarFiltro(valor) {
+  filtro.value = valor
+}
 </script>
 
 <template>
   <div class="container">
     <h1>Lista de Tarefas</h1>
-    <input type="text" v-model="novaTarefa" placeholder="Adicionar nova tarefa"/>
-    <button @click="addTarefa">
-      {{ posicaoAlterada == -1 ? "Adicionar" : "Salvar" }}
-    </button>
-    <ul>
-      <TestItem
-        v-for="tarefa in tarefasFiltradas"
-        :tarefa="tarefa"
-        :key="tarefa.id"
-        @excluir="delTarefa"
-        @status="alterarStatus"
-        @editar="editTarefa">
-      </TestItem>
-    </ul>
-    <input type="text" placeholder="Filtrar tarefa" v-model="filtro"
+
+    <FormTarefa
+      :novaTarefa="novaTarefa"
+      :modoEdicao="editando"
+      @inputTarefa="receberInput"
+      @salvar="addTarefa"
     />
-    <button @click="ordenarArray">Ordenar</button>
-    <button @click="recuperarTarefas">Recuperar</button>
+
+    <ListaTarefasChild
+      :tarefas="tarefasFiltradas"
+      @status="alterarStatus"
+      @editar="editTarefa"
+      @excluir="delTarefa"
+    />
+
+    <FiltroTarefa
+      :filtro="filtro"
+      @filtrar="atualizarFiltro"
+    />
+
+    <AcoesTarefa
+      @ordenar="ordenarArray"
+      @recuperar="recuperarTarefas"
+    />
+
     <p>Pendentes: {{ pendentes }}</p>
     <p>Concluídas: {{ concluidas }}</p>
   </div>
