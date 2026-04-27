@@ -55,7 +55,7 @@ const tarefasFiltradas = computed(() => {
 })
 
 function ordenarArray() {
-  tarefas.value.sort((a, b) => a.tarefa.localeCompare(b.tarefa))
+  tarefas.value.sort((a, b) => a.tarefa.localeCompare(b.tarefa, 'pt-BR'));
 }
 
 const concluidas = computed(() => {
